@@ -16,6 +16,32 @@ const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
 
 const app = express();
 
+const mongoose = require("mongoose");
+const connectDB = require("./config/db");
+const User = require("./models/User");
+
+// Ensure database is connected on serverless request invocation
+app.use(async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState === 0) {
+      await connectDB(process.env.MONGODB_URI);
+      const adminExists = await User.findOne({ email: "phi123123@gmail.com" });
+      if (!adminExists) {
+        await User.create({
+          name: "System Admin",
+          email: "phi123123@gmail.com",
+          password: "jbjbdabkjdghsbcsa",
+          phoneNumber: "0000000000",
+          role: "Admin",
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Database connection failure:", err.message);
+  }
+  next();
+});
+
 app.use(cors());
 app.use(helmet());
 app.use(compression());
