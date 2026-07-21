@@ -42,8 +42,17 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use(cors());
-app.use(helmet());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,6 +73,9 @@ app.use("/api/inspections", protect, inspectionRoutes);
 app.use("/api/followups", protect, followUpRoutes);
 app.use("/api/map", protect, mapRoutes);
 app.use("/api/daily-activities", protect, dailyActivityRoutes);
+
+// Explicitly handle preflight OPTIONS requests for all endpoints
+app.options("*", cors());
 
 app.use(notFound);
 app.use(errorHandler);
