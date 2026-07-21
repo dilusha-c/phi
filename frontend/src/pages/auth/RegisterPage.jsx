@@ -35,7 +35,7 @@ const RegisterPage = () => {
       password,
       phoneNumber,
       role,
-      phiId: role === 'PHI' ? (phiId.trim() || undefined) : undefined
+      phiId: role === 'PHI' ? nic : undefined
     };
 
     const res = await register(payload);
@@ -134,7 +134,7 @@ const RegisterPage = () => {
               </div>
             </label>
 
-            <label className="block">
+            <label className="block sm:col-span-2">
               <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-400">User Role</span>
               <select
                 value={role}
@@ -145,22 +145,6 @@ const RegisterPage = () => {
                 <option value="SPHI" className="bg-slate-800">Supervising PHI (SPHI)</option>
               </select>
             </label>
-
-            {role === 'PHI' && (
-              <label className="block">
-                <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-400">PHI ID (Optional)</span>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={phiId}
-                    onChange={(e) => setPhiId(e.target.value)}
-                    placeholder="E.g. PHI-001 (or NIC default)"
-                    className="w-full rounded-2xl border border-slate-700 bg-slate-800/50 py-3 pl-10 pr-4 text-sm text-white outline-none transition focus:border-primary-400 focus:bg-slate-850"
-                  />
-                  <HelpCircle className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                </div>
-              </label>
-            )}
           </div>
 
           <div className="pt-2">

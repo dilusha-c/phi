@@ -92,7 +92,7 @@ const UserManagementPage = () => {
         password: newPassword,
         phoneNumber: newPhone,
         role: newRole,
-        phiId: newRole === 'PHI' ? (newPhiId.trim() || undefined) : undefined
+        phiId: newRole === 'PHI' ? newNic : undefined
       });
       if (res.success) {
         pushNotification({
@@ -150,7 +150,7 @@ const UserManagementPage = () => {
         nic: editNic,
         phoneNumber: editPhone,
         role: editRole,
-        phiId: editRole === 'PHI' ? (editPhiId.trim() || undefined) : undefined
+        phiId: editRole === 'PHI' ? editNic : undefined
       };
       if (editPassword) {
         payload.password = editPassword;
@@ -522,30 +522,16 @@ const UserManagementPage = () => {
                 />
               </div>
 
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-                <div>
-                  <span className={labelClassName}>Staff Role</span>
-                  <select
-                    value={newRole}
-                    onChange={(e) => setNewRole(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm dark:border-slate-800 dark:bg-slate-800 dark:text-white outline-none focus:border-primary-400"
-                  >
-                    <option value="PHI">PHI Field Inspector</option>
-                    <option value="SPHI">SPHI Supervisor</option>
-                  </select>
-                </div>
-                {newRole === 'PHI' && (
-                  <div>
-                    <span className={labelClassName}>PHI ID (Optional)</span>
-                    <input
-                      type="text"
-                      value={newPhiId}
-                      onChange={(e) => setNewPhiId(e.target.value)}
-                      placeholder="e.g. PHI-042"
-                      className={inputClassName}
-                    />
-                  </div>
-                )}
+              <div>
+                <span className={labelClassName}>Staff Role</span>
+                <select
+                  value={newRole}
+                  onChange={(e) => setNewRole(e.target.value)}
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm dark:border-slate-800 dark:bg-slate-800 dark:text-white outline-none focus:border-primary-400"
+                >
+                  <option value="PHI">PHI Field Inspector</option>
+                  <option value="SPHI">SPHI Supervisor</option>
+                </select>
               </div>
 
               <div className="flex gap-3 justify-end pt-4 border-t border-slate-100 dark:border-slate-800">
@@ -633,31 +619,17 @@ const UserManagementPage = () => {
                 />
               </div>
 
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-                <div>
-                  <span className={labelClassName}>Staff Role</span>
-                  <select
-                    value={editRole}
-                    onChange={(e) => setEditRole(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm dark:border-slate-800 dark:bg-slate-800 dark:text-white outline-none focus:border-primary-400"
-                  >
-                    <option value="PHI">PHI Field Inspector</option>
-                    <option value="SPHI">SPHI Supervisor</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-                </div>
-                {editRole === 'PHI' && (
-                  <div>
-                    <span className={labelClassName}>PHI ID</span>
-                    <input
-                      type="text"
-                      value={editPhiId}
-                      onChange={(e) => setEditPhiId(e.target.value)}
-                      placeholder="e.g. PHI-001"
-                      className={inputClassName}
-                    />
-                  </div>
-                )}
+              <div>
+                <span className={labelClassName}>Staff Role</span>
+                <select
+                  value={editRole}
+                  onChange={(e) => setEditRole(e.target.value)}
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm dark:border-slate-800 dark:bg-slate-800 dark:text-white outline-none focus:border-primary-400"
+                >
+                  <option value="PHI">PHI Field Inspector</option>
+                  <option value="SPHI">SPHI Supervisor</option>
+                  <option value="Admin">Admin</option>
+                </select>
               </div>
 
               <div className="flex gap-3 justify-end pt-4 border-t border-slate-100 dark:border-slate-800">
