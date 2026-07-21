@@ -4,8 +4,12 @@ const fs = require("fs");
 
 const uploadDir = path.join(process.cwd(), "uploads");
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn("Uploads directory creation bypassed (read-only filesystem):", err.message);
 }
 
 const storage = multer.diskStorage({
