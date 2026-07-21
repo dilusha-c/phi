@@ -23,7 +23,11 @@ const User = require("./models/User");
 // Ensure database is connected on serverless request invocation
 app.use(async (req, res, next) => {
   try {
+    mongoose.set("bufferCommands", false); // Prevent queries from hanging if DB is disconnected
     if (mongoose.connection.readyState === 0) {
+      if (!process.env.MONGODB_URI) {
+        throw new Error("MONGODB_URI environment variable is missing.");
+      }
       await connectDB(process.env.MONGODB_URI);
       const adminExists = await User.findOne({ email: "phi123123@gmail.com" });
       if (!adminExists) {
@@ -36,10 +40,15 @@ app.use(async (req, res, next) => {
         });
       }
     }
+    next();
   } catch (err) {
     console.error("Database connection failure:", err.message);
+    return res.status(500).json({
+      success: false,
+      message: "Database connection failed. Check your environment variables on Vercel.",
+      error: err.message,
+    });
   }
-  next();
 });
 
 app.use(
