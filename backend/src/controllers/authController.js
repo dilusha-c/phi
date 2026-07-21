@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const asyncHandler = require("../utils/asyncHandler");
-const ApiResponse = require("../utils/ApiResponse");
+const ApiResponse = require("../utils/apiResponse");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || "fallback_secret", {
