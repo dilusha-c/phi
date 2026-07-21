@@ -6,7 +6,10 @@ const connectDB = async (mongoUri) => {
   }
 
   mongoose.set("strictQuery", true);
-  await mongoose.connect(mongoUri);
+  await mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: 3000,
+    connectTimeoutMS: 3000,
+  });
 };
 
 module.exports = connectDB;
