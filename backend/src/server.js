@@ -1,4 +1,13 @@
 require("dotenv").config();
+const dns = require("dns");
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {
+  console.warn("Could not set DNS servers, falling back to system defaults");
+}
 const app = require("./app");
 const connectDB = require("./config/db");
 
